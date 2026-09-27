@@ -127,7 +127,7 @@ public class SinglyLinkedList<E extends Comparable<E>> {
             positionsList.add(positions[j]);
         }
         //sorting the positions list based on the nodes
-        positionsList.sort((a, b) ->Integer.compare((Integer) nodes.get(a).getElement(),(Integer) nodes.get(b).getElement()));
+        positionsList.sort((a, b) ->nodes.get(a).getElement().compareTo(nodes.get(b).getElement()));
 
         //swapping the nodes based on the sorted positions
         for (int left = 0; left < positionsList.size() / 2; left++) {
@@ -144,6 +144,7 @@ public class SinglyLinkedList<E extends Comparable<E>> {
         }
         nodes.get(nodes.size() - 1).setNext(null);
         head = nodes.get(0);       
+        tail = nodes.get(nodes.size() - 1);
     }
    
 }
