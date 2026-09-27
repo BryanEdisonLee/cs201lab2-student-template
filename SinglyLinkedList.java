@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.ArrayList;
 
 public class SinglyLinkedList<E extends Comparable<E>> {
     private Node<E> head = null;
@@ -101,8 +101,49 @@ public class SinglyLinkedList<E extends Comparable<E>> {
 
     // write your codes here
     public void swap(){
-        
+        //counter
+        int i = 0;
+        Node <E> counter = head;
+        while (head != null && counter != null){
+            counter = counter.getNext();
+            i++;
+        }
 
+        //store nodes and positions
+        ArrayList<Node<E>> nodes = new ArrayList<>(i);
+        int[] positions = new int[i];
+        Node<E> current = head;
+        int pos = 0;
+        while (current != null) {
+            nodes.add(current);
+            positions[pos] = pos;
+            current = current.getNext();
+            pos++;
+        }
+        
+        //moving the int array to an arraylist so i can use sort
+        ArrayList<Integer> positionsList = new ArrayList<>();
+        for (int j = 0; j < positions.length; j++) {
+            positionsList.add(positions[j]);
+        }
+        //sorting the positions list based on the nodes
+        positionsList.sort((a, b) ->Integer.compare((Integer) nodes.get(a).getElement(),(Integer) nodes.get(b).getElement()));
+
+        //swapping the nodes based on the sorted positions
+        for (int left = 0; left < positionsList.size() / 2; left++) {
+        int first = positionsList.get(left);
+        int last = positionsList.get(positionsList.size() - 1 - left);
+        Node<E> temp = nodes.get(first);
+        nodes.set(first, nodes.get(last));
+        nodes.set(last, temp);
+        }
+        //build the linked list, handle empty nodes
+        if (nodes.isEmpty()) return;
+        for (int j = 0; j < nodes.size() - 1; j++) {
+            nodes.get(j).setNext(nodes.get(j + 1));
+        }
+        nodes.get(nodes.size() - 1).setNext(null);
+        head = nodes.get(0);       
     }
    
 }
